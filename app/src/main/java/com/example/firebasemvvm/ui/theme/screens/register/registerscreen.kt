@@ -3,6 +3,7 @@ package com.example.firebasemvvm.ui.theme.screens.register
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,124 +29,167 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.firebasemvvm.data.AuthViewModel
+import com.example.firebasemvvm.navigation.ROUTE_LOGIN
+import com.example.firebasemvvm.ui.theme.DeepBlue
+import com.example.firebasemvvm.ui.theme.Jose
+import com.example.firebasemvvm.ui.theme.Joseph
+import com.example.firebasemvvm.ui.theme.LemonYellow
+import com.example.firebasemvvm.ui.theme.Orchid
+import com.example.firebasemvvm.ui.theme.Pink802
+import com.example.firebasemvvm.ui.theme.SkyBlue
+import com.example.firebasemvvm.ui.theme.green
 
 
 @Composable
 fun Register_Screen(navController: NavHostController) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) }
-    var lname by remember { mutableStateOf(TextFieldValue("")) }
-    var fname by remember { mutableStateOf(TextFieldValue("")) }
+    var pass by remember { mutableStateOf(TextFieldValue("")) }
+    var confirmpass by remember { mutableStateOf(TextFieldValue("")) }
+    val context = LocalContext.current
 
-
-
-
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFC1E3)) // Soft pink background 🌸
-            .padding(16.dp)
-    ) {
-        Text(
-            "Register Screen",
-            color = Color(0xFF6A1B9A), // Deep purple
-            fontSize = 35.sp,
-            fontFamily = FontFamily.Monospace
-        )
-        Spacer(modifier = Modifier.height(50.dp))
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = {
-                Text(
-                    "Enter email",
-                    color = Color(0xFF6A1B9A),
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Pink802, DeepBlue, SkyBlue)
                 )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFFFF3F8), RoundedCornerShape(12.dp)) // Light rose field
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = {
-                Text(
-                    "Enter password",
-                    color = Color(0xFF6A1B9A),
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFFFF3F8), RoundedCornerShape(12.dp)) // Matching soft field
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        OutlinedTextField(
-            value = fname,
-            onValueChange = { fname = it },
-            label = {
-                Text(
-                    "Enter first name",
-                    color = Color(0xFF6A1B9A),
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFFFF3F8), RoundedCornerShape(12.dp)) // Matching soft field
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        OutlinedTextField(
-            value = lname,
-            onValueChange = { lname = it },
-            label = {
-                Text(
-                    "Enter last name",
-                    color = Color(0xFF6A1B9A),
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFFFF3F8), RoundedCornerShape(12.dp)) // Matching soft field
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        Button(
-            onClick = { /* TODO: Login */ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFF3F6)), // Bright Mint Green 💚
-            shape = RoundedCornerShape(40.dp),
-            elevation = ButtonDefaults.buttonElevation(14.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-        ) {
-            Text(
-                text = " Click to  Sign Up",
-                color = Color.Blue,
-                fontSize = 30.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Medium
             )
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            // Title
+            Text(
+                text = "Create an Account",
+                color = Joseph, // Adjusted for better visibility
+                fontFamily = FontFamily.Cursive,
+                fontWeight = FontWeight.Bold,
+                fontSize = 36.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "Sign up to get started",
+                color = LemonYellow, // Adjusted for better contrast
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center
+            )
+
+            // Email Input
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text(text = "Email Address", color = Joseph) },
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Joseph,
+                    unfocusedIndicatorColor = Color.LightGray,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White
+                )
+            )
+
+            // Password Input
+            TextField(
+                value = pass,
+                onValueChange = { pass = it },
+                label = { Text(text = "Password", color = Joseph) },
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Joseph,
+                    unfocusedIndicatorColor = Color.LightGray,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White
+                )
+            )
+
+            // Confirm Password Input
+            TextField(
+                value = confirmpass,
+                onValueChange = { confirmpass = it },
+                label = { Text(text = "Confirm Password", color = Joseph) },
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Orchid,
+                    unfocusedIndicatorColor = Color.LightGray,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.White
+                )
+            )
+
+            // Register Button
+            Button(
+                onClick = {
+                    val myRegister = AuthViewModel(navController, context)
+                    myRegister.sign_up(email.text.trim(), pass.text.trim(), confirmpass.text.trim())
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = green),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text(
+                    text = "Register",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
+
+            // Login Button
+            TextButton(
+                onClick = { navController.navigate(ROUTE_LOGIN) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Already have an account? Log in",
+                    color = Color.LightGray,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp
+                )
+            }
         }
     }
 }

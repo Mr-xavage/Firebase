@@ -1,6 +1,5 @@
 package com.example.firebasemvvm.models
 
-
 class User {
     class User{
         var email:String=""

@@ -28,7 +28,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import android.coil3.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
+
 import com.example.firebasemvvm.data.productviewmodel
 import com.example.firebasemvvm.models.Upload
 import com.example.firebasemvvm.navigation.ROUTE_UPDATE_PRODUCT
